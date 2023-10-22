@@ -54,6 +54,15 @@ class Matrix {
             }
             return prod;
         }
+        Matrix operator* (const Matrix other) {
+            this->check_same_shape(other, "multiplication");
+
+            Matrix prod(this->width, this->height);
+            for(int i = 0; i < this->size; i++) {
+                prod.data[i] = this->data[i] * other.data[i];
+            }
+            return prod;
+        }
 
         Matrix operator+ (float value) {
             // add to every element
@@ -63,7 +72,7 @@ class Matrix {
             }
             return sum;
         }
-        Matrix operator+ (Matrix& other) {
+        Matrix operator+ (const Matrix& other) {
             // element wise addition
             this->check_same_shape(other, "addition");
 
