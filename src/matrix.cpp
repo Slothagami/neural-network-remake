@@ -43,6 +43,16 @@ class Matrix {
                     std::cout << "]\n";
                 }
             }
+            std::cout << "\n";
+        }
+
+        Matrix operator* (float value) {
+            // element wize multiplication
+            Matrix prod(this->width, this->height);
+            for(int i = 0; i < this->size; i++) {
+                prod.data[i] = this->data[i] * value;
+            }
+            return prod;
         }
 
         Matrix operator+ (float value) {
@@ -55,13 +65,7 @@ class Matrix {
         }
         Matrix operator+ (Matrix& other) {
             // element wise addition
-            // check for same shape
-            if(!(other.width == this->width && other.height == this->height)) {
-                std::string message = "matrix shapes (" + 
-                    std::to_string(other.width) + ", " + std::to_string(other.height) + ") and (" + 
-                    std::to_string(this->width) + ", " + std::to_string(this->height) + ") incompatible for addition.";
-                throw std::runtime_error(message);
-            }
+            this->check_same_shape(other, "addition");
 
             Matrix sum(this->width, this->height);
             for(int i = 0; i < this->size; i++) {
@@ -70,23 +74,38 @@ class Matrix {
             return sum;
         }
 
+        Matrix operator- (float value) {
+            // add negative of the value
+            return *this + (-value);
+        }
+        Matrix operator- (const Matrix& other) {
+            this->check_same_shape(other, "subtraction");
+
+            Matrix sum(this->width, this->height);
+            for(int i = 0; i < this->size; i++) {
+                sum.data[i] = this->data[i] - other.data[i];
+            }
+            return sum;
+        }
+
     private:
         float* data;
+
+        bool check_same_shape(const Matrix&other, std::string operation) {
+            if(!(other.width == this->width && other.height == this->height)) {
+                std::string message = "matrix shapes (" + 
+                    std::to_string(other.width) + ", " + std::to_string(other.height) + ") and (" + 
+                    std::to_string(this->width) + ", " + std::to_string(this->height) + ") incompatible for " +
+                    operation + ".";
+                throw std::runtime_error(message);
+            }
+        }
 };
 
 int main() {
-    Matrix mat(2, 2);
-    Matrix sum = mat + 1.;
-    Matrix sum2 = mat + sum;
-    Matrix sum3 = sum2 + 1;
-
-    mat.print();
-    sum.print();
-    sum2.print();
-    sum3.print();
-
+    Matrix a(2, 2);
     Matrix b(1, 2);
-    Matrix c = mat + b;
+    Matrix sum = a + b;
 
     return 0;
 }
