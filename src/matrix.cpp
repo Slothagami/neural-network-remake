@@ -12,7 +12,7 @@ class Matrix {
             this->size   = width * height;
 
             this->data = new float[this->size];
-            this->fill(0);
+            this->fill(0.);
         }
 
         Matrix(const Matrix& other) {
@@ -45,12 +45,30 @@ class Matrix {
             }
         }
 
-        // Matrix operator+ (float other) {
-        //     // add to every element
-        // }
-        // Matrix operator+ (Matrix other) {
-        //     // element wise addition
-        // }
+        Matrix operator+ (float value) {
+            // add to every element
+            Matrix sum(this->width, this->height);
+            for(int i = 0; i < this->size; i++) {
+                sum.data[i] = this->data[i] + value;
+            }
+            return sum;
+        }
+        Matrix operator+ (Matrix& other) {
+            // element wise addition
+            // check for same shape
+            if(!(other.width == this->width && other.height == this->height)) {
+                std::string message = "matrix shapes (" + 
+                    std::to_string(other.width) + ", " + std::to_string(other.height) + ") and (" + 
+                    std::to_string(this->width) + ", " + std::to_string(this->height) + ") incompatible for addition.";
+                throw std::runtime_error(message);
+            }
+
+            Matrix sum(this->width, this->height);
+            for(int i = 0; i < this->size; i++) {
+                sum.data[i] = this->data[i] + other.data[i];
+            }
+            return sum;
+        }
 
     private:
         float* data;
@@ -58,7 +76,17 @@ class Matrix {
 
 int main() {
     Matrix mat(2, 2);
+    Matrix sum = mat + 1.;
+    Matrix sum2 = mat + sum;
+    Matrix sum3 = sum2 + 1;
+
     mat.print();
+    sum.print();
+    sum2.print();
+    sum3.print();
+
+    Matrix b(1, 2);
+    Matrix c = mat + b;
 
     return 0;
 }
