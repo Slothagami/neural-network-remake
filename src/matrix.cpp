@@ -15,6 +15,10 @@ class Matrix {
             this->fill(0);
         }
 
+        Matrix(const Matrix& other) {
+            // deep copies an existing matrix
+        }
+
         ~Matrix() {
             // destructor for cleaning memory
             delete[] this->data;
@@ -40,6 +44,13 @@ class Matrix {
                 }
             }
         }
+
+        // Matrix operator+ (float other) {
+        //     // add to every element
+        // }
+        // Matrix operator+ (Matrix other) {
+        //     // element wise addition
+        // }
 
     private:
         float* data;
