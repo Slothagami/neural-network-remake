@@ -17,8 +17,9 @@ input  = np.ones((2,1))
 error_plot = []
 for epoch in range(200):
     err = nn.train_sample(input, target)
+    nn.batch()
 
-    if epoch % 20 == 0:
+    if epoch % 50 == 0:
         print(f"Out: {nn.forward(input).T}, Error: {err}")
 
     error_plot.append(err)

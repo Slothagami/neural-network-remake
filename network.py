@@ -37,6 +37,15 @@ class Network:
     
     def display_error(self, target):
         return self.error_func.forward(target, self.output)
+    
+    def batch(self):
+        for layer in self.layers:
+            # check if layer has update method
+            upd = getattr(layer, "update", None)
+
+            # if update function exists
+            if callable(upd):
+                layer.update()
 
 
 class FCLayer:
@@ -44,6 +53,10 @@ class FCLayer:
         self.weights = np.random.randn(out_shape, in_shape)
         self.bias    = np.random.randn(out_shape, 1)
         self.input   = None
+
+        self.weight_deltas = np.zeros_like(self.weights)
+        self.bias_deltas   = np.zeros_like(self.bias)
+        self.n_examples    = 0
 
     def forward(self, input):
         self.input = input
@@ -54,7 +67,19 @@ class FCLayer:
         d_weights = np.dot(grad, self.input.T)
         d_bias    = grad
 
-        self.weights -= lr * d_weights
-        self.bias    -= lr * d_bias
+        # update deltas to change weights after batch
+        self.weight_deltas += lr * d_weights
+        self.bias_deltas   += lr * d_bias
+        self.n_examples += 1
 
         return out_grad
+    
+    def update(self):
+        # update from the average of the previous samples
+        self.weights -= self.weight_deltas / self.n_examples
+        self.bias    -= self.bias_deltas   / self.n_examples
+
+        # reset deltas
+        self.weight_deltas = np.zeros_like(self.weights)
+        self.bias_deltas   = np.zeros_like(self.bias)
+        self.n_examples    = 0
