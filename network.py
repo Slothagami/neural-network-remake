@@ -38,7 +38,7 @@ class Network:
     def display_error(self, target):
         return self.error_func.forward(target, self.output)
     
-    def batch(self):
+    def update_batch(self):
         for layer in self.layers:
             # check if layer has update method
             upd = getattr(layer, "update", None)
