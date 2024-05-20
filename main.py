@@ -8,16 +8,16 @@ import tensorflow as tf
 # load dataset
 mnist = tf.keras.datasets.mnist 
 (train_batch, train_labels), (test_batch, test_labels) = mnist.load_data()
-train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
-test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
+train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255 
+test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 
 
 # setup 
-lr = 0.04
+lr = 0.03
 nn = Network(MSE(), lr)
-nn.config((28*28, 64, 10), FCLayer, Tanh)
+nn.config((28*28, 100, 50, 10), FCLayer, Sigmoid)
 
-batch_size = 128
-epochs = 2
+batch_size = 1
+epochs = 3
 
 print(f"Beginning training: {lr=}, {batch_size=}, {epochs=}\n")
 
@@ -61,7 +61,8 @@ print(f"Test  Accuracy: {correct}/{test_labels.size} ({correct/test_labels.size 
 
 
 plt.plot(error_plot)
-plt.ylim((0,1.5))
+plt.ylim((0,.8))
 plt.ylabel("Training Error")
-plt.xlabel("Epoch")
+plt.xlabel("Batch")
+plt.title(f"Test  Accuracy: {correct}/{test_labels.size} ({correct/test_labels.size * 100:.2f}%)")
 plt.show()
