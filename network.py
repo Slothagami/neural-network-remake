@@ -50,8 +50,8 @@ class Network:
 
 class FCLayer:
     def __init__(self, in_shape, out_shape):
-        self.weights = np.random.randn(out_shape, in_shape)
-        self.bias    = np.random.randn(out_shape, 1)
+        self.weights = np.random.rand(out_shape, in_shape) - .5
+        self.bias    = np.random.rand(out_shape, 1)        - .5
         self.input   = None
 
         self.weight_deltas = np.zeros_like(self.weights)
