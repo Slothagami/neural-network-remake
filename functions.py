@@ -22,6 +22,17 @@ class Tanh:
     def backprop(self, d_err, lr):
         return d_err * ( 1 - np.square(np.tanh(self.input)) )
     
+class ReLU:
+    def __init__(self):
+        self.input = None
+
+    def forward(self, x):
+        self.input = x
+        return np.maximum(0, x)
+    
+    def backprop(self, d_err, lr):
+        return d_err * (self.input > 0).astype(np.float32)
+    
 class MSE:
     def forward(self, target, pred):
         return np.mean(np.square(target - pred))

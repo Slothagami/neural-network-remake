@@ -76,6 +76,7 @@ class FCLayer:
     
     def update(self):
         # update from the average of the previous samples
+        if self.n_examples == 0: return
         self.weights -= self.weight_deltas / self.n_examples
         self.bias    -= self.bias_deltas   / self.n_examples
 

@@ -1,31 +1,40 @@
 from functions import *
 from network   import * 
+from util      import *
 import numpy as np 
 import matplotlib.pyplot as plt
+import tensorflow as tf
+
+# load dataset
+print("loading data...")
+mnist = tf.keras.datasets.mnist 
+(train_batch, train_labels), (test_batch, test_labels) = mnist.load_data()
+
+# Reshape Data
+train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
+test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
+
 
 np.set_printoptions(precision=4)
 
 # setup network
-nn = Network(MSE(), .1)
-nn.config((2, 3, 5, 2), FCLayer, Sigmoid)
-
-# run network
-target = np.array([[1],[0]])
-input  = np.ones((2,1))
+nn = Network(MSE(), .01)
+nn.config((28*28, 64, 10), FCLayer, Tanh)
 
 # train network
 error_plot = []
-for epoch in range(200):
-    err = nn.train_sample(input, target)
-    nn.update_batch()
+for i, (sample, label) in enumerate(zip(train_batch, train_labels)):
+    label = one_hot(10, label)
+    err = nn.train_sample(sample, label)
 
-    if epoch % 50 == 0:
-        print(f"Out: {nn.forward(input).T}, Error: {err}")
+    if i % 128 == 0:
+        nn.update_batch()
+        print(f"Error: {err:.8f}")
+        error_plot.append(err)
 
-    error_plot.append(err)
 
 plt.plot(error_plot)
-plt.ylim((0,1))
+plt.ylim((0,1.5))
 plt.ylabel("Training Error")
 plt.xlabel("Epoch")
 plt.show()
