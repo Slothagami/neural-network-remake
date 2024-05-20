@@ -6,16 +6,10 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 # load dataset
-print("loading data...")
 mnist = tf.keras.datasets.mnist 
 (train_batch, train_labels), (test_batch, test_labels) = mnist.load_data()
-
-# Reshape Data
 train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
 test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 * 2 - 1
-
-
-np.set_printoptions(precision=4)
 
 # setup network
 nn = Network(MSE(), .01)
