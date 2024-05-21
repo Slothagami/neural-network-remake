@@ -12,6 +12,9 @@ class Network:
             self.add(type(in_size, out_size))
             self.add(activation())
 
+    def set_layers(self, layers):
+        self.layers = layers
+
     def add(self, layer):
         self.layers.append(layer)
 

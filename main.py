@@ -7,7 +7,7 @@ import tensorflow as tf
 
 """
     Best achieved accuracy:
-    dataset=mnist, lr=0.06, batch_size=1, epochs=4
+    dataset=mnist, error=mse, lr=0.06, batch_size=1, epochs=4
 
     Epoch 1 Error: 0.01237253
     Epoch 2 Error: 0.00661639
@@ -25,9 +25,17 @@ train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float3
 test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 
 
 # setup 
-lr = 0.06#0.03
-nn = Network(MSE(), lr)
-nn.config((28*28, 100, 50, 10), FCLayer, Sigmoid)
+lr = 0.06
+nn = Network(CCE(), lr)
+
+nn.set_layers([
+    FCLayer(28*28, 100),
+    Sigmoid(),
+    FCLayer(100, 50),
+    Sigmoid(),
+    FCLayer(50, 10),
+    Softmax()
+])
 
 batch_size = 1
 epochs = 4
@@ -74,7 +82,7 @@ print(f"Test  Accuracy: {correct}/{test_labels.size} ({correct/test_labels.size 
 
 
 plt.plot(error_plot)
-plt.ylim((0,.4))
+plt.ylim((0,1))
 plt.ylabel("Training Error")
 plt.xlabel("Batch")
 plt.title(f"Test  Accuracy: {correct}/{test_labels.size} ({correct/test_labels.size * 100:.2f}%)")
