@@ -26,7 +26,10 @@ train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float3
 test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255
 
 # setup 
-lr = 0.9#0.19
+batch_size = 1
+epochs     = 1 #4
+lr         = 0.9 #0.19
+
 nn = Network(CCE(), lr)
 
 nn.set_layers([
@@ -38,8 +41,6 @@ nn.set_layers([
     Softmax()
 ])
 
-batch_size = 1
-epochs = 4
 
 print(f"Beginning training: {lr=}, {batch_size=}, {epochs=}\n")
 
