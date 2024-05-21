@@ -22,8 +22,8 @@ import tensorflow as tf
 # load dataset
 mnist = tf.keras.datasets.mnist 
 (train_batch, train_labels), (test_batch, test_labels) = mnist.load_data()
-train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255 
-test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 
+train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255
+test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255
 
 # setup 
 lr = 0.9#0.19
@@ -48,13 +48,13 @@ error_plot = []
 for epoch in range(epochs):
     for i, (sample, label) in enumerate(zip(train_batch, train_labels)):
         label = one_hot(10, label)
-        err = nn.train_sample(sample, label)
+        err   = nn.train_sample(sample, label)
 
         if i % batch_size == 0:
             nn.update_batch()
             error_plot.append(err)
 
-        if i == train_labels.size-1:
+        if i == train_labels.size - 1:
             print(f"Epoch {epoch+1} Error: {err:.8f}")
 
 
