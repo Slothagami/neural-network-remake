@@ -38,7 +38,7 @@ nn.set_layers([
 ])
 
 batch_size = 1
-epochs = 4
+epochs = 1
 
 print(f"Beginning training: {lr=}, {batch_size=}, {epochs=}\n")
 
@@ -59,27 +59,8 @@ for epoch in range(epochs):
 
 
 # test accuracy
-correct = 0
-for sample, label in zip(train_batch, train_labels):
-    label = one_hot(10, label)
-    pred  = nn.forward(sample)
-
-    if np.argmax(pred) == np.argmax(label):
-        correct += 1
-
-print(f"\nTrain Accuracy: {correct}/{train_labels.size} ({correct/train_labels.size * 100:.2f}%)")
-
-# test accuracy
-correct = 0
-for sample, label in zip(test_batch, test_labels):
-    label = one_hot(10, label)
-    pred  = nn.forward(sample)
-
-    if np.argmax(pred) == np.argmax(label):
-        correct += 1
-
-print(f"Test  Accuracy: {correct}/{test_labels.size} ({correct/test_labels.size * 100:.2f}%)\n")
-
+one_hot_accuracy("Train", nn, train_batch, train_labels)
+correct = one_hot_accuracy("Test ", nn, test_batch,  test_labels)
 
 plt.plot(error_plot)
 plt.ylim((0,1))
