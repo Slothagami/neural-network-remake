@@ -26,7 +26,7 @@ train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float3
 test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255 
 
 # setup 
-lr = 0.95#0.19
+lr = 0.9#0.19
 nn = Network(CCE(), lr)
 
 nn.set_layers([
@@ -60,7 +60,7 @@ for epoch in range(epochs):
 
 
 # test accuracy
-one_hot_accuracy("Train", nn, train_batch, train_labels)
+one_hot_accuracy("\nTrain", nn, train_batch, train_labels)
 correct = one_hot_accuracy("Test ", nn, test_batch,  test_labels)
 
 plt.plot(error_plot)

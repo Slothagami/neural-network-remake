@@ -14,5 +14,5 @@ def one_hot_accuracy(name, nn, samples, labels):
         if np.argmax(pred) == np.argmax(label):
             correct += 1
 
-    print(f"{name} Accuracy: {correct}/{labels.size} ({correct/labels.size * 100:.2f}%)\n")
+    print(f"{name} Accuracy: {correct}/{labels.size} ({correct/labels.size * 100:.2f}%)")
     return correct
