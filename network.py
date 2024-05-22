@@ -84,6 +84,6 @@ class FCLayer:
         self.bias    -= self.bias_deltas   / self.n_examples
 
         # reset deltas
-        self.weight_deltas = np.zeros_like(self.weights)
-        self.bias_deltas   = np.zeros_like(self.bias)
+        self.weight_deltas.fill(0)
+        self.bias_deltas  .fill(0)
         self.n_examples    = 0
