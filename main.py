@@ -16,7 +16,7 @@ import tensorflow as tf
     Epoch 4 Error: 0.00056664
 
     Train Accuracy: 58432/60000 (97.39%)
-    Test  Accuracy: 9628/10000 (96.28%)
+    Test  Accuracy:  9628/10000 (96.28%)
 """
 
 # load dataset
@@ -28,7 +28,7 @@ test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float3
 # setup 
 batch_size = 1
 epochs     = 1 #4
-lr         = 0.9 #0.19
+lr         = 0.9
 
 nn = Network(CCE(), lr)
 
