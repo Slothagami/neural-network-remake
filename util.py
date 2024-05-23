@@ -1,9 +1,7 @@
-import numpy as np
+import tensorflow as tf
 
 def one_hot(length, value):
-    vector = np.zeros((length, 1))
-    vector[value] = 1
-    return vector
+    return tf.transpose(tf.one_hot([value], length))
 
 def one_hot_accuracy(name, nn, samples, labels):
     correct = 0
@@ -11,7 +9,7 @@ def one_hot_accuracy(name, nn, samples, labels):
         label = one_hot(10, label)
         pred  = nn.forward(sample)
 
-        if np.argmax(pred) == np.argmax(label):
+        if tf.argmax(pred) == tf.argmax(label):
             correct += 1
 
     print(f"{name} Accuracy: {correct}/{labels.size} ({correct/labels.size * 100:.2f}%)")

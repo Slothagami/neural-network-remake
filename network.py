@@ -1,4 +1,4 @@
-import numpy as np
+import tensorflow as tf
 
 class Network:
     def __init__(self, error_func, lr):
@@ -53,21 +53,21 @@ class Network:
 
 class FCLayer:
     def __init__(self, in_shape, out_shape):
-        self.weights = np.random.rand(out_shape, in_shape) - .5
-        self.bias    = np.random.rand(out_shape, 1)        - .5
+        self.weights = tf.random.uniform((out_shape, in_shape)) - .5
+        self.bias    = tf.random.uniform((out_shape, 1))        - .5
         self.input   = None
 
-        self.weight_deltas = np.zeros_like(self.weights)
-        self.bias_deltas   = np.zeros_like(self.bias)
+        self.weight_deltas = tf.zeros_like(self.weights)
+        self.bias_deltas   = tf.zeros_like(self.bias)
         self.n_examples    = 0
 
     def forward(self, input):
         self.input = input
-        return np.dot(self.weights, input) + self.bias
+        return tf.matmul(self.weights, input) + self.bias
 
     def backprop(self, grad, lr):
-        out_grad  = np.dot(self.weights.T, grad)
-        d_weights = np.dot(grad, self.input.T)
+        out_grad  = tf.matmul(tf.transpose(self.weights), grad)
+        d_weights = tf.matmul(grad, tf.transpose(self.input))
         d_bias    = grad
 
         # update deltas to change weights after batch
@@ -84,6 +84,6 @@ class FCLayer:
         self.bias    -= self.bias_deltas   / self.n_examples
 
         # reset deltas
-        self.weight_deltas.fill(0)
-        self.bias_deltas  .fill(0)
+        self.weight_deltas = tf.zeros_like(self.weights)
+        self.bias_deltas   = tf.zeros_like(self.bias)
         self.n_examples    = 0

@@ -1,7 +1,6 @@
 from functions import *
 from network   import * 
 from util      import *
-import numpy as np 
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
@@ -24,6 +23,8 @@ mnist = tf.keras.datasets.mnist
 (train_batch, train_labels), (test_batch, test_labels) = mnist.load_data()
 train_batch = train_batch.reshape(train_batch.shape[0], 28*28, 1).astype("float32") / 255
 test_batch  = test_batch .reshape(test_batch .shape[0], 28*28, 1).astype("float32") / 255
+
+# use tf.one_hot(labels, n_classes) on each one
 
 # setup 
 batch_size = 1
