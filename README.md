@@ -1,12 +1,16 @@
-# w.ai.fu
-AI vtuber made from scratch
+# Neural Network Remake
+This Project is a revamp of my older [Neural Network from Scratch Project](https://github.com/Slothagami/neural-network) with nicer code and slghtly better performance.
 
-DODO (catchup):
+This Project impliments a fully connected neural network complete with backpropogation and several loss functions to choose from. This model has achieved 97.28% test accuracy on the MNIST image classification dataset.
+
+For an implimentation of a convolutional neural network, see the older project.
+
+DODO (catchup to old version):
 - optimize speed
 - convolution layers
     - pooling layers
 
-TODO (to go beyond):
+Future Features:
 - transposed convolution
 - diffusion model
 - transformer
