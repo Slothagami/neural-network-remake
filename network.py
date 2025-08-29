@@ -44,6 +44,13 @@ class Network:
         return output
     
     def train_sample(self, input, target):
+        """
+            Passes a single training sample through the model.
+            Does not update weights immediately, but instead waits
+            for `network.update_batch()` to be called.
+
+            Expects input is a `float32` numpy array with the shape `(sample_size, 1)`.
+        """
         self.forward(input) 
         d_error = self.output_error(target)
 
