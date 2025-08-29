@@ -15,7 +15,7 @@ def one_hot(length: int, value: int):
     vector[value] = 1
     return vector
 
-def one_hot_accuracy(name: str, network, samples, labels, print=True):
+def one_hot_accuracy(name: str, network, samples, labels, print_result=True):
     """
         Calculates the accuracy of the model over the data provided and optionally prints the percentage accuracy.
     """
@@ -27,7 +27,7 @@ def one_hot_accuracy(name: str, network, samples, labels, print=True):
         if np.argmax(pred) == np.argmax(label):
             correct += 1
 
-    if print:
+    if print_result:
         print(f"{name} Accuracy: {correct}/{labels.size} ({correct/labels.size * 100:.2f}%)")
 
     return correct
