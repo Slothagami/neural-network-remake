@@ -14,11 +14,6 @@ class Network:
         self.output = None
         self.lr = lr
 
-    def config(self, layers, type, activation):
-        for in_size, out_size in zip(layers, layers[1:]):
-            self.append_layer(type(in_size, out_size))
-            self.append_layer(activation())
-
     def set_layers(self, layers: list[NetworkLayer]):
         """
             Sets the layers of the network, for example
