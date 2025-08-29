@@ -52,7 +52,14 @@ class Softmax(ActivationLayer):
     
 
 # Loss Functions
-class MSE:
+class LossFunction:
+    def forward(self, target, pred):
+        raise NotImplementedError("Forward function not implimented.")
+    
+    def backprop(self, target, pred):
+        raise NotImplementedError("Backpropogation function not implimented.")
+
+class MSE(LossFunction):
     def forward(self, target, pred):
         return np.mean(np.square(target - pred))
     
@@ -60,7 +67,7 @@ class MSE:
         return -2 * (target - pred) / target.size
 
 EPS = 1e-16
-class CCE: # Categorical Cross Entropy
+class CCE(LossFunction): # Categorical Cross Entropy
     def forward(self, target, pred):
         return -np.sum(target * np.log(pred + EPS)) / target.size
     
