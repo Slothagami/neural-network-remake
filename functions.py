@@ -1,42 +1,41 @@
 import numpy as np
 
-class Sigmoid:
+# Activation Layers
+class ActivationLayer:
     def __init__(self):
         self.input = None
 
     def forward(self, x):
         self.input = x
+    
+    def backprop(self, d_err, lr):
+        return d_err
+
+class Sigmoid(ActivationLayer):
+    def forward(self, x):
+        super()
         return 1 / (1 + np.exp(-x))
     
     def backprop(self, d_err, lr):
         return d_err * self.forward(self.input) * (1 - self.forward(self.input))
     
-class Tanh:
-    def __init__(self):
-        self.input = None
-
+class Tanh(ActivationLayer):
     def forward(self, x):
-        self.input = x
+        super()
         return np.tanh(x)
     
     def backprop(self, d_err, lr):
         return d_err * ( 1 - np.square(np.tanh(self.input)) )
     
-class ReLU:
-    def __init__(self):
-        self.input = None
-
+class ReLU(ActivationLayer):
     def forward(self, x):
-        self.input = x
+        super()
         return np.maximum(0, x)
     
     def backprop(self, d_err, lr):
         return d_err * (self.input > 0).astype(np.float32)
     
-class Softmax:
-    def __init__(self):
-        self.output = None
-
+class Softmax(ActivationLayer):
     def forward(self, x):
         x  -= np.max(x) # shift input to avoid overflows
         exp = np.exp(x)
@@ -49,9 +48,10 @@ class Softmax:
         y_mat = np.tile(self.output, stack_size)
 
         derivative = y_mat * (np.identity(stack_size) - y_mat.T)
-
         return np.dot(derivative, d_err)
     
+
+# Loss Functions
 class MSE:
     def forward(self, target, pred):
         return np.mean(np.square(target - pred))
