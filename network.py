@@ -19,7 +19,7 @@ class Network:
             self.append_layer(type(in_size, out_size))
             self.append_layer(activation())
 
-    def set_layers(self, layers: list):
+    def set_layers(self, layers: list[NetworkLayer]):
         """
             Sets the layers of the network, for example
             ```
@@ -33,7 +33,7 @@ class Network:
         """
         self.layers = layers
 
-    def append_layer(self, layer):
+    def append_layer(self, layer: NetworkLayer):
         self.layers.append(layer)
 
     def forward(self, input):
