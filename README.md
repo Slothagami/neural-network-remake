@@ -1,21 +1,18 @@
 # Neural Network Remake
-This Project is a revamp of my older [Neural Network from Scratch Project](https://github.com/Slothagami/neural-network) with nicer code and slghtly better performance.
+This Project impliments a fully connected neural network libary for python. This model is capable of achieving 97.28% test accuracy on the MNIST image classification dataset, as shown in the [example code](./main.py).
 
-This Project impliments a fully connected neural network complete with backpropogation and several loss functions to choose from. This model has achieved 97.28% test accuracy on the MNIST image classification dataset.
+This Project is a revamp of my older [Neural Network from Scratch Project](https://github.com/Slothagami/neural-network) that implimented a convolutional network in the same manner.
 
-For an implimentation of a convolutional neural network, see the older project.
+## Features
+- Highly customizable training process 
+- Construct network layers easily with python arrays.
+- Support for fully connected and activation layers.
+- Several options for activation functions and loss functions including Categorical Cross Entropy loss (CCE), Mean Squared Error (MSE), Softmax, Tanh, RElU and Sigmoid functions.
+- Helper functions for One Hot encoding.
 
-DODO (catchup to old version):
-- optimize speed
-- convolution layers
-    - pooling layers
-
-Future Features:
-- transposed convolution
-- diffusion model
-- transformer
-
-training notes:
-- if the error bottoms out and doesn't go below a threshold, this is probably a sign that the batch size is too high
-- using tanh you should normalize the data from -1 to 1 and the weights should be uniformly spread between +-.5
-- using sigmoid you should normalize the data from 0 to 1 and the weights should be uniformly spread between +-.5
+## Installation
+After cloning this repository, you can install all dependences by running the command 
+```bash
+git clone https://github.com/Slothagami/neural-network-remake.git
+pip install -r requirements.txt
+```
