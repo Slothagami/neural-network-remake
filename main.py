@@ -30,7 +30,6 @@ epochs     = 1 #4
 lr         = 0.9
 
 nn = Network(CCE(), lr)
-
 nn.set_layers([
     FCLayer(28*28, 100),
     Sigmoid(),

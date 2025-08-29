@@ -4,7 +4,7 @@ class Network:
     """
         Manager for a Neural Network Model. Initialized with no layers.
         Call the `network.set_layers()` method to add layers manually. Or use 
-        `network.add()`.
+        `network.append_layer()`.
     """
 
     def __init__(self, error_func, lr: float):
