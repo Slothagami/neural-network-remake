@@ -27,7 +27,7 @@ class FCLayer(NetworkLayer):
         self.n_examples    = 0
 
     def forward(self, input):
-        super().forward()
+        super().forward(input)
         return np.dot(self.weights, input) + self.bias
 
     def backprop(self, grad, lr):

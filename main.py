@@ -1,6 +1,7 @@
 from functions import *
 from network   import * 
 from util      import *
+from layers    import FCLayer
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
