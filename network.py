@@ -1,7 +1,13 @@
 import numpy as np
 
 class Network:
-    def __init__(self, error_func, lr):
+    """
+        Manager for a Neural Network Model. Initialized with no layers.
+        Call the `network.set_layers()` method to add layers manually. Or use 
+        `network.add()`.
+    """
+
+    def __init__(self, error_func, lr: float):
         self.layers = []
         self.error_func = error_func
         self.output = None
@@ -9,13 +15,24 @@ class Network:
 
     def config(self, layers, type, activation):
         for in_size, out_size in zip(layers, layers[1:]):
-            self.add(type(in_size, out_size))
-            self.add(activation())
+            self.append_layer(type(in_size, out_size))
+            self.append_layer(activation())
 
     def set_layers(self, layers):
+        """
+            Sets the layers of the network, for example
+            ```
+            network.set_layers([
+                FCLayer(100, 50),
+                Sigmoid(),
+                FCLayer(50, 10),
+                Softmax()
+            ])
+            ```
+        """
         self.layers = layers
 
-    def add(self, layer):
+    def append_layer(self, layer):
         self.layers.append(layer)
 
     def forward(self, input):
@@ -42,6 +59,11 @@ class Network:
         return self.error_func.forward(target, self.output)
     
     def update_batch(self):
+        """
+            Applies the weights obtained from `train_sample()`. 
+            Will update the network with the average gradient from every
+            training sample processed since the last call to this function.
+        """
         for layer in self.layers:
             # check if layer has update method
             upd = getattr(layer, "update", None)
@@ -52,7 +74,12 @@ class Network:
 
 
 class FCLayer:
-    def __init__(self, in_shape, out_shape):
+    """
+        A Fully connected layer for use inside the `Network` class.
+        Will automatically generate initial weights based on `in_shape` and `out_shape`
+    """
+
+    def __init__(self, in_shape: int, out_shape: int):
         self.weights = np.random.rand(out_shape, in_shape) - .5
         self.bias    = np.random.rand(out_shape, 1)        - .5
         self.input   = None
