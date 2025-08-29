@@ -1,22 +1,33 @@
 import numpy as np
 
-class FCLayer:
+class NetworkLayer:
+    def __init__(self):
+        self.input = None
+
+    def forward(self, input):
+        self.input = input
+
+    def backprop(self, grad, lr):
+        return grad
+
+
+class FCLayer(NetworkLayer):
     """
         A Fully connected layer for use inside the `Network` class.
         Will automatically generate initial weights based on `in_shape` and `out_shape`
     """
 
     def __init__(self, in_shape: int, out_shape: int):
+        super().__init__()
         self.weights = np.random.rand(out_shape, in_shape) - .5
         self.bias    = np.random.rand(out_shape, 1)        - .5
-        self.input   = None
 
         self.weight_deltas = np.zeros_like(self.weights)
         self.bias_deltas   = np.zeros_like(self.bias)
         self.n_examples    = 0
 
     def forward(self, input):
-        self.input = input
+        super().forward()
         return np.dot(self.weights, input) + self.bias
 
     def backprop(self, grad, lr):
