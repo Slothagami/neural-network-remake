@@ -9,6 +9,7 @@ def one_hot(length: int, value: int):
         > np.array([[1], 
                     [0], 
                     [0]])
+        ```
     """
     vector = np.zeros((length, 1))
     vector[value] = 1
