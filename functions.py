@@ -13,7 +13,7 @@ class ActivationLayer:
 
 class Sigmoid(ActivationLayer):
     def forward(self, x):
-        super()
+        super().forward(x)
         return 1 / (1 + np.exp(-x))
     
     def backprop(self, d_err, lr):
@@ -21,7 +21,7 @@ class Sigmoid(ActivationLayer):
     
 class Tanh(ActivationLayer):
     def forward(self, x):
-        super()
+        super().forward(x)
         return np.tanh(x)
     
     def backprop(self, d_err, lr):
@@ -29,7 +29,7 @@ class Tanh(ActivationLayer):
     
 class ReLU(ActivationLayer):
     def forward(self, x):
-        super()
+        super().forward(x)
         return np.maximum(0, x)
     
     def backprop(self, d_err, lr):
