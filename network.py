@@ -1,4 +1,5 @@
 import numpy as np
+from functions import ActivationLayer, LossFunction
 
 class Network:
     """
@@ -7,7 +8,7 @@ class Network:
         `network.append_layer()`.
     """
 
-    def __init__(self, error_func, lr: float):
+    def __init__(self, error_func: LossFunction, lr: float):
         self.layers = []
         self.error_func = error_func
         self.output = None
@@ -18,7 +19,7 @@ class Network:
             self.append_layer(type(in_size, out_size))
             self.append_layer(activation())
 
-    def set_layers(self, layers):
+    def set_layers(self, layers: list):
         """
             Sets the layers of the network, for example
             ```
