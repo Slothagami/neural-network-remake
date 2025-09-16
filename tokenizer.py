@@ -18,10 +18,15 @@ def remove_punctuation(text):
 
     return text
 
+def word_sequence(text):
+    text  = remove_punctuation(text).lower()
+    words = re.split(r"(\s)", text)
+    words = [word for word in words if (word != " " and word != "")]
+    return words
+
 def make_tokens(text):
-    text = remove_punctuation(text).lower()
-    words = re.split(r"\s+", text)
-    return list(set(words)) + [" ", "\n"]
+    unique = list(set(word_sequence(text)))
+    return unique + [" ", "\n"]
 
 if __name__ == "__main__":
     with open("datasets/rj.txt", "r", encoding="utf-8") as file:
