@@ -30,9 +30,10 @@ def make_embedding_table(dataset_text):
 
     # train network
     epochs = 1
-    batch_size = 64
+    batch_size = 128
     errsum = 0
-    count  = 0
+    sample_count = 0
+    count = 0
     for epoch in range(epochs):
         for i, token in enumerate(sequence):
             token_one_hot = one_hot_token(token, tokens)
@@ -48,16 +49,14 @@ def make_embedding_table(dataset_text):
 
                 err = nn.train_sample(token_one_hot, target_one_hot)
                 errsum += err
-                count  += 1
+                sample_count += 1
+                count += 1
 
-            if i % (batch_size // 3) == 0 and i != 0: 
-                print(f"\tSample {i:05}.")
-
-            if i % batch_size == 0 and i != 0: 
-                nn.update_batch()
-                print(f"Sample: {i:05}: Error: {errsum / count:.16f}")
-                errsum = 0
-                count  = 0
+                if sample_count % batch_size == 0: 
+                    nn.update_batch()
+                    print(f"Sample: {sample_count:06}: Error: {errsum / count:.16f}")
+                    errsum = 0
+                    count  = 0
 
     return nn.layers[0].weights
 
